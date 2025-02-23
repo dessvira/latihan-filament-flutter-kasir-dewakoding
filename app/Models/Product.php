@@ -30,4 +30,14 @@ class Product extends Model
         }
         return $slug;
     }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->image ? url ('storage/'. $this->image):null;
+    }
+
+    public function scopeSearch($query, $value)
+    {
+        $query->where("name", "like", "%{$value}%");
+    }
 }

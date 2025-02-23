@@ -13,9 +13,15 @@ class PaymentMethod extends Model
     //
     use HasFactory;
 
+    protected $fillable = [
+        'name', 
+        'image', 
+        'is_cash'
+    ];
+
     public function order(): HasMany
     {
         return $this->hasMany(Order::class);
     }
-    protected $fillable = ['name', 'image', 'is_cash'];
+   
 }

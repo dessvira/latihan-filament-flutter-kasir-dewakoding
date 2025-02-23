@@ -13,12 +13,25 @@ class Order extends Model
 {
     //
     use HasFactory;
+
+    protected $fillable = [ //ini diambil dari database
+        'name',
+        'email',
+        'gender',
+        'phone',
+        'birthday',
+        'total_price',
+        'note',
+        'payment_method_id',
+        'paid_amount',
+        'change_amount',
+    ];
     public function payment_method(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
     }
 
-    public function orderProduct(): HasMany
+    public function orderProducts(): HasMany
     {
         return $this->hasMany(OrderProduct::class, 'order_id');
     }

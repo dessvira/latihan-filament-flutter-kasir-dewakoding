@@ -25,7 +25,7 @@ return new class extends Migration
             ->constrained('payment_methods')
             ->nullOnDelete();
             $table->integer('paid_amount')->nullable();
-            $table->integer('changed_amount')->nullable();
+            $table->integer('change_amount')->nullable();
             $table->timestamps();
         });
     }
