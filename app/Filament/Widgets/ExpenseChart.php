@@ -4,16 +4,17 @@ namespace App\Filament\Widgets;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Expense;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 use Filament\Widgets\ChartWidget;
 
-class OmsetChart extends ChartWidget
+class ExpenseChart extends ChartWidget
 {
-    protected static ?string $heading = 'Omset';
-    protected static ?int $sort =1;
+    protected static ?string $heading = 'Expense';
+    protected static ?int $sort = 2;
+    protected static string $color = 'danger';
     public ?string $filter = 'today';
-    protected static string $color = 'success';
 
     protected function getData(): array
     {
@@ -43,7 +44,7 @@ class OmsetChart extends ChartWidget
         };
         
         
-        $query = Trend::model(Order::class)
+        $query = Trend::model(Expense::class)
         ->between(
             start: $dateRange['start'],
             end: $dateRange['end'],
@@ -58,7 +59,7 @@ class OmsetChart extends ChartWidget
             $data = $query->perMonth();
         }
 
-        $data = $data->sum('total_price');
+        $data = $data->sum('amount');
         
         $labels = $data->map(function (TrendValue $value) use ($dateRange) {
             $date = Carbon::parse($value->date);
@@ -74,7 +75,7 @@ class OmsetChart extends ChartWidget
     return [
         'datasets' => [
             [
-                'label' => 'Omset' .$this->getFilters()[$activeFilter],
+                'label' => 'Expense' .$this->getFilters()[$activeFilter],
                 'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
             ],
         ],
